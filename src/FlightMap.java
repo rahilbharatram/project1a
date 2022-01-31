@@ -143,7 +143,7 @@ public class FlightMap {
         //checkMatrix();
 
     }
-    
+
     /**
      * Access to reference table
      * @return rtable
