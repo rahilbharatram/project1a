@@ -1,3 +1,5 @@
+package src;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
@@ -34,7 +36,7 @@ public class SearchMap {
         dfsUtil(m.getStartPoint(), visited,route, 0);
 
     }
-    
+
     /**
      * Util function to recursively execute dfs on flightMap
      * @param node current node being checked

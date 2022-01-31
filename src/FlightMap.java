@@ -1,3 +1,4 @@
+package src;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -120,7 +121,7 @@ public class FlightMap {
 
     /**
      * Actually reads the file and saves data to the matrix variable
-     * @throws IOException
+     * @throws IOException in case file cannot be read properly
      */
     private void readFile() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(filename));
