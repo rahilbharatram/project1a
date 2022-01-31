@@ -35,6 +35,40 @@ public class SearchMap {
 
     }
     
+    /**
+     * Util function to recursively execute dfs on flightMap
+     * @param node current node being checked
+     * @param visited list of all the visited notes
+     * @param route current route being taken from startPoint
+     * @param totalCost total cost of the route till now
+     */
+    private static void dfsUtil(Character node, List<Character> visited, String route, int totalCost) {
+
+        // add node to visited
+        visited.add(node);
+
+        //making sure it does not print a flight from the startPoint to the startPoint
+        if(!node.equals(m.getStartPoint())) {
+            route+=","+node;
+            //Printing out the route + cost
+            System.out.format("%15s %15s %15s\n",node,route,totalCost);
+        }
+
+        //searching through current nodes flights to other cities
+        for(int i =0; i < m.getNumberOfAirports();i++) {
+
+            //making sure that a flight exists, and that we have not already visited that airport/node
+            if((m.getMatrix()[m.getRTable().indexOf(node)][i] != 0) && (!visited.contains(m.getRTable().get(i)))) {
+                //System.out.println("In: "+node);
+
+                //calling dfs on next node
+                dfsUtil(m.getRTable().get(i), visited, route, totalCost+m.getMatrix()[m.getRTable().indexOf(node)][i]);
+            }
+        }
+
+    }
+
+
 
     /**
      * Executes finding paths to all cities from a given start city
