@@ -119,6 +119,32 @@ public class FlightMap {
     }
 
     /**
+     * Actually reads the file and saves data to the matrix variable
+     * @throws IOException
+     */
+    private void readFile() throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(filename));
+        String line = "";
+
+        line = br.readLine();
+
+        //closes file if it is empty or missing first line
+        if(line == null) {
+            br.close();
+            return;
+        }
+
+        //parses file to save to matrix
+        while((line=br.readLine())!=null){
+            String[] temp = line.split(" ");
+            matrix[rtable.indexOf(temp[0].charAt(0))][rtable.indexOf(temp[1].charAt(0))]=Integer.parseInt(temp[2]);
+        }
+        br.close();
+        //checkMatrix();
+
+    }
+    
+    /**
      * Access to reference table
      * @return rtable
      */
