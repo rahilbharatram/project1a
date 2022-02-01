@@ -15,6 +15,7 @@
     <path id="classpath">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
     </path>
+    <path id="application" location="${dist.dir}/${ant.project.name}.jar"/>
 
     <!--set up some directories used by this project-->
     <target name="init" description="setup project directories">
@@ -65,15 +66,14 @@
         </delete>
     </target>
 
-    <target name="junit" depends="dist">
+    <target name="test" depends="dist">
         <junit printsummary="yes">
             <classpath>
                 <path refid="classpath"/>
                 <path refid="application"/>
             </classpath>
-
             <batchtest fork="yes">
-                <fileset dir="${src.dir}" includes="**/*Test.java"/>
+                <fileset dir="${source.dir}" includes="**/*Test.java"/>
             </batchtest>
         </junit>
     </target>
