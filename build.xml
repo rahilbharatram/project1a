@@ -5,10 +5,16 @@
     </description>
 
     <!--global properties for this build file-->
-    <property name="source.dir" location="src"/>
+    <property name="source.dir" location="src/project1a"/>
     <property name="build.dir" location="bin"/>
     <property name="doc.dir" location="doc"/>
     <property name="dist.dir" location="dist"/>
+    <property name="main-class"  value="SearchMap"/>
+    <property name="lib.dir"     value="lib"/>
+
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
 
     <!--set up some directories used by this project-->
     <target name="init" description="setup project directories">
@@ -17,23 +23,59 @@
         <mkdir dir="${dist.dir}"/>
     </target>
 
+
+
     <!--Compile the java code in src dir into build dir-->
     <target name="compile" depends="init" description="compile java sources">
-        <javac srcdir="${source.dir}" destdir="${build.dir}"/>
+        <javac srcdir="${source.dir}" destdir="${build.dir}">
+            <include name="**/*Map.java"/>
+            <exclude name="**/*Test.java"/>
+        </javac>
+    </target>
+
+    <target name="dist" depends="compile">
+        <jar destfile="${dist.dir}/${ant.project.name}.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="src.project1a.SearchMap"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run">
+        <java jar="${dist.dir}/${ant.project.name}.jar" fork="true"/>
     </target>
 
     <!--Generate javadocs for current project into docs dir-->
     <target name="doc" depends="init" description="generate documentation">
-        <javadoc sourcepath="${source.dir}" destdir="${doc.dir}"/>
+        <javadoc destdir="${doc.dir}">
+            <fileset dir="${source.dir}" defaultexcludes="yes">
+                <include name="**/*Map.java"/>
+                <exclude name="**/*Test.java"/>
+            </fileset>
+        </javadoc>
     </target>
 
     <!--Delete the build & doc directories and Emacs backup (*~) files-->
     <target name="clean" description="tidy up the workspace">
         <delete dir="${build.dir}"/>
         <delete dir="${doc.dir}"/>
+        <delete dir="${dist.dir}"/>
         <delete>
             <fileset defaultexcludes="no" dir="${source.dir}" includes="**/*~"/>
         </delete>
+    </target>
+
+    <target name="junit" depends="dist">
+        <junit printsummary="yes">
+            <classpath>
+                <path refid="classpath"/>
+                <path refid="application"/>
+            </classpath>
+
+            <batchtest fork="yes">
+                <fileset dir="${src.dir}" includes="**/*Test.java"/>
+            </batchtest>
+        </junit>
     </target>
     
 </project>

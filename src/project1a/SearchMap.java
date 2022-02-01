@@ -1,4 +1,4 @@
-package src;
+package src.project1a;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -80,12 +80,14 @@ public class SearchMap {
     public static void main(String[] args) throws IOException {
 
         //setting output file
-        PrintStream o = new PrintStream("output.txt");
+        PrintStream o = new PrintStream(args[1]);
+        //System.out.println(args[1]);
+        //PrintStream o = new PrintStream("output.txt");
         System.setOut(o);
-        m = new FlightMap("input.txt");
+        m = new FlightMap(args[0]);
+        //m = new FlightMap("input.txt");
         m.readFileHelper();
         //m.checkMatrix();
-
         dfs();
 
     }

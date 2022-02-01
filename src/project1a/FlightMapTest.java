@@ -1,4 +1,4 @@
-package src;
+package src.project1a;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
